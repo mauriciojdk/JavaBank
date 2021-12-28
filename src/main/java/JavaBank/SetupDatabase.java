@@ -33,5 +33,6 @@ public class SetupDatabase {
         statement.executeUpdate(sql);
         sql = "CREATE TABLE IF NOT EXISTS pessoa (id_pessoa INTEGER NOT NULL AUTO_INCREMENT, cpf INTEGER NOT NULL, data_nascimento VARCHAR(11), PRIMARY KEY (id_pessoa))";
         statement.executeUpdate(sql);
+
     }
 }
