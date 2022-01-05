@@ -1,6 +1,7 @@
 package JavaBank;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Conta implements ContaPadrao {
     private Double saldo;
@@ -15,10 +16,13 @@ public class Conta implements ContaPadrao {
         this.numConta = numConta;
     }
 
-    public Conta() {
-    }
+    public Conta() {};
 
-    ;
+    public int getNumConta (){
+        Random gerador = new Random();
+        int num = gerador.nextInt(1000)+2000;
+        return num;
+    }
 
     @Override
     public void saque(Double valor) {
