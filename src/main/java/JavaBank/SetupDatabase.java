@@ -22,7 +22,7 @@ public class SetupDatabase {
         statement.executeUpdate(sql);
         sql = "CREATE TABLE IF NOT EXISTS agencia (id_agencia INTEGER NOT NULL AUTO_INCREMENT, numero_agencia INTEGER NOT NULL, PRIMARY KEY (id_agencia))";
         statement.executeUpdate(sql);
-        sql = "CREATE TABLE IF NOT EXISTS pessoa (id_pessoa INTEGER NOT NULL AUTO_INCREMENT, cpf VARCHAR(15) NOT NULL, data_nascimento VARCHAR(15) NOT NULL, nome VARCHAR(255) NOT NULL, PRIMARY KEY (id_pessoa))";
+        sql = "CREATE TABLE IF NOT EXISTS pessoa (id_pessoa INTEGER NOT NULL AUTO_INCREMENT, cpf VARCHAR(15) NOT NULL, data_nascimento DATE NOT NULL, nome VARCHAR(255) NOT NULL, PRIMARY KEY (id_pessoa))";
         statement.executeUpdate(sql);
         sql = "CREATE TABLE IF NOT EXISTS conta (id_conta INTEGER NOT NULL AUTO_INCREMENT, numero_conta INTEGER NOT NULL, saldo DOUBLE, pessoa_id INTEGER, FOREIGN KEY (pessoa_id) REFERENCES pessoa (id_pessoa), PRIMARY KEY (id_conta))";
         statement.executeUpdate(sql);

@@ -7,6 +7,7 @@ public class Conta implements ContaPadrao {
     private Double saldo;
     private int agencia;
     private int numConta;
+    private Pessoa pessoa;
 
     ArrayList<String> extratoConta = new ArrayList<String>();
 

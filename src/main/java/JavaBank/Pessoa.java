@@ -1,16 +1,18 @@
 package JavaBank;
 
+import java.time.LocalDate;
+
 public class Pessoa {
     private Integer id;
     private String cpf;
-    private String data_Nascimento;
+    private LocalDate dataNascimento;
     private String nome;
 
     public Pessoa(){}
 
-    public Pessoa( String cpf, String data_Nascimento, String nome){
+    public Pessoa(String cpf, LocalDate dataNascimento, String nome){
         this.cpf = cpf;
-        this.data_Nascimento = data_Nascimento;
+        this.dataNascimento = dataNascimento;
         this.nome = nome;
     }
 
@@ -30,6 +32,14 @@ public class Pessoa {
         this.cpf = cpf;
     }
 
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -37,15 +47,4 @@ public class Pessoa {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    public String getData_Nascimento() {
-        return data_Nascimento;
-    }
-
-    public void setData_Nascimento(String data_Nascimento) {
-        this.data_Nascimento = data_Nascimento;
-    }
-
-
-
 }
