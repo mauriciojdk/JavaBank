@@ -34,6 +34,28 @@ public class Acao {
 
     }
 
+    public void removerConta(Integer id) throws SQLException {
+        String query = "DELETE FROM conta WHERE id_conta = ?";
+        PreparedStatement stm = null;
+
+        stm = connection.prepareStatement(query);
+        stm.setInt(1, id);
+        stm.execute();
+
+        query = "DELETE FROM pessoa WHERE id_pessoa = ?";
+        stm = connection.prepareStatement(query);
+        stm.setInt(1, id);
+        stm.execute();
+
+        if (connection != null){
+            connection.close();
+        } if (statement != null){
+            statement.close();
+        }
+
+
+    }
+
 
 
 

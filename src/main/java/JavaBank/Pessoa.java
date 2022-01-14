@@ -65,7 +65,13 @@ public class Pessoa {
             id_pessoa = res.getInt(1);
             return id_pessoa;
         }
+        if (connection != null){
+            connection.close();
+        } if (statement != null){
+            statement.close();
+        }
 
         return id_pessoa;
+
     }
 }

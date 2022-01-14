@@ -7,12 +7,14 @@ public class Test {
 
     public static void main(String[] args) throws SQLException {
 
-        LocalDate localDateAntigo = LocalDate.of(2002, 6, 21);
+      /*  LocalDate localDateAntigo = LocalDate.of(2003, 5, 05);
         //Teste de cadastro
-        Pessoa pessoa = new Pessoa("134564564",localDateAntigo ,"isabela");
+        Pessoa pessoa = new Pessoa("08466356545",localDateAntigo ,"Mauricio");
         Conta conta = new Conta();
         Acao acao = new Acao();
-        acao.cadastrarPessoa(pessoa, conta);
+        acao.cadastrarPessoa(pessoa, conta);*/
+        Acao acao = new Acao();
+        acao.removerConta(2);
 
        /* LocalDate a = LocalDate.now();
        System.out.println(a);
