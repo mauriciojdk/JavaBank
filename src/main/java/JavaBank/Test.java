@@ -6,19 +6,28 @@ import java.time.LocalDate;
 public class Test {
 
     public static void main(String[] args) throws SQLException {
-
-      /*  LocalDate localDateAntigo = LocalDate.of(2003, 5, 05);
-        //Teste de cadastro
+       //CREATE
+        LocalDate localDateAntigo = LocalDate.of(2003, 5, 05);
         Pessoa pessoa = new Pessoa("08466356545",localDateAntigo ,"Mauricio");
         Conta conta = new Conta();
         Acao acao = new Acao();
-        acao.cadastrarPessoa(pessoa, conta);*/
-        Acao acao = new Acao();
-        acao.removerConta(2);
+        acao.cadastrarPessoa(pessoa, conta);
 
-       /* LocalDate a = LocalDate.now();
-       System.out.println(a);
-        */
+
+        //REMOVE
+       // Acao acao = new Acao();
+       // acao.removerConta(2);
+
+
+        //UPDATE
+        localDateAntigo = LocalDate.of(2022, 6, 06);
+        pessoa.setCpf("123456");
+        pessoa.setNome("LINDO");
+        pessoa.setDataNascimento(localDateAntigo);
+        acao.updateBank(conta, pessoa);
+
+
+        //PEGAR ULTIMO ID
 
        /* Integer oi = pessoa.getLastId();
         System.out.println(oi);*/

@@ -56,7 +56,18 @@ public class Acao {
 
     }
 
+    public void updateBank(Conta conta, Pessoa pessoa ) throws SQLException {
+        String query = "UPDATE pessoa SET cpf = ?, data_nascimento = ?, nome = ? WHERE id_pessoa = ?";
+        PreparedStatement stm = null;
 
+        stm = connection.prepareStatement(query);
+        stm.setString(1, pessoa.getCpf());
+        stm.setDate(2, Date.valueOf(pessoa.getDataNascimento()));
+        stm.setString(3, pessoa.getNome());
+        stm.setInt(4, pessoa.getLastId());
 
+        stm.execute();
+
+    }
 
 }
