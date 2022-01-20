@@ -109,7 +109,6 @@ public class Acao {
 
     }
 
-
     public List<Pessoa> getPessoas() {
         List<Pessoa> pessoas = null;
         try {
@@ -149,4 +148,176 @@ public class Acao {
         }
         return pessoas;
     }
+
+    public List<Pessoa> getPessoasMaiores() {
+        List<Pessoa> pessoas = null;
+        try {
+
+            String query = "SELECT id_pessoa, nome, cpf, data_nascimento FROM pessoa WHERE data_nascimento < '2003-01-01'";
+            pessoas = new ArrayList<Pessoa>();
+            PreparedStatement stm = null;
+            ResultSet rset = null;
+
+            stm = connection.prepareStatement(query);
+
+            rset = stm.executeQuery();
+
+            while (rset.next()) {
+                Pessoa pessoa = new Pessoa();
+
+                pessoa.setId(rset.getInt("id_pessoa"));
+                pessoa.setNome(rset.getString("nome"));
+                pessoa.setCpf(rset.getString("cpf"));
+                pessoa.setDataNascimento(LocalDate.parse((String.valueOf(rset.getDate("data_nascimento")))));
+
+                pessoas.add(pessoa);
+
+            }
+
+            if (connection != null) {
+                connection.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Erro SQL " + e);
+        }
+
+        return pessoas;
+
+    }
+
+    public List<Pessoa> getPessoasMenores() {
+        List<Pessoa> pessoas = null;
+        try {
+
+            String query = "SELECT id_pessoa, nome, cpf, data_nascimento FROM pessoa WHERE data_nascimento > '2003-01-01'";
+            pessoas = new ArrayList<Pessoa>();
+            PreparedStatement stm = null;
+            ResultSet rset = null;
+
+            stm = connection.prepareStatement(query);
+
+            rset = stm.executeQuery();
+
+            while (rset.next()) {
+                Pessoa pessoa = new Pessoa();
+
+                pessoa.setId(rset.getInt("id_pessoa"));
+                pessoa.setNome(rset.getString("nome"));
+                pessoa.setCpf(rset.getString("cpf"));
+                pessoa.setDataNascimento(LocalDate.parse((String.valueOf(rset.getDate("data_nascimento")))));
+
+                pessoas.add(pessoa);
+
+            }
+
+            if (connection != null) {
+                connection.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Erro SQL " + e);
+        }
+
+        return pessoas;
+
+    }
+
+    public List<Pessoa> getSaldoPositivos() {
+        List<Pessoa> pessoas = null;
+        try {
+
+            String query = "SELECT pessoa_id FROM conta WHERE saldo > '0'";
+            pessoas = new ArrayList<Pessoa>();
+            PreparedStatement stm = null;
+            ResultSet rset = null;
+
+            stm = connection.prepareStatement(query);
+
+            rset = stm.executeQuery();
+
+            rset.next();
+            Pessoa people = new Pessoa();
+            people.setId(rset.getInt("pessoa_id"));
+
+            query = "SELECT id_pessoa, nome, cpf, data_nascimento FROM pessoa WHERE id_pessoa = ?";
+            stm = connection.prepareStatement(query);
+            stm.setInt(1, people.getId());
+            rset = stm.executeQuery();
+
+            while (rset.next()) {
+                Pessoa pessoa = new Pessoa();
+
+                pessoa.setId(rset.getInt("id_pessoa"));
+                pessoa.setNome(rset.getString("nome"));
+                pessoa.setCpf(rset.getString("cpf"));
+                pessoa.setDataNascimento(LocalDate.parse((String.valueOf(rset.getDate("data_nascimento")))));
+
+                pessoas.add(pessoa);
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return pessoas;
+
+    } //a concertar
+
+    public List<Pessoa> getSaldoNegativos() {
+        List<Pessoa> pessoas = null;
+        try {
+
+            String query = "SELECT pessoa_id FROM conta WHERE saldo < '0'";
+            pessoas = new ArrayList<Pessoa>();
+            PreparedStatement stm = null;
+            ResultSet rset = null;
+
+            stm = connection.prepareStatement(query);
+
+            rset = stm.executeQuery();
+
+            rset.next();
+                Pessoa people = new Pessoa();
+                people.setId(rset.getInt("pessoa_id"));
+
+                query = "SELECT id_pessoa, nome, cpf, data_nascimento FROM pessoa WHERE id_pessoa = ?";
+                stm = connection.prepareStatement(query);
+                stm.setInt(1, people.getId());
+                rset = stm.executeQuery();
+
+            while (rset.next()) {
+                Pessoa pessoa = new Pessoa();
+
+                pessoa.setId(rset.getInt("id_pessoa"));
+                pessoa.setNome(rset.getString("nome"));
+                pessoa.setCpf(rset.getString("cpf"));
+                pessoa.setDataNascimento(LocalDate.parse((String.valueOf(rset.getDate("data_nascimento")))));
+
+                pessoas.add(pessoa);
+                rset.next();
+
+            }
+
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return pessoas;
+
+    } //a concertar
 }
+
