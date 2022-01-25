@@ -15,7 +15,7 @@ public class Acao {
         connection = new ConnectionFactory().getConnection();
     }
 
-    public void cadastrarPessoa(Pessoa pessoa, Conta conta) {
+    private void cadastrarPessoa(Pessoa pessoa, Conta conta) {
         try {
 
             String query = "INSERT INTO pessoa (cpf, data_nascimento, nome) VALUES (?, ?, ?)";
@@ -50,7 +50,7 @@ public class Acao {
         }
     }
 
-    public void removerConta(Integer id) {
+    private void removerConta(Integer id) {
         try {
 
             String query = "DELETE FROM conta WHERE id_conta = ?";
@@ -81,7 +81,7 @@ public class Acao {
 
     }
 
-    public void updateBank(Pessoa pessoa) {
+    private void updateBank(Pessoa pessoa) {
         try {
 
             String query = "UPDATE pessoa SET cpf = ?, data_nascimento = ?, nome = ? WHERE id_pessoa = ?";
@@ -109,7 +109,7 @@ public class Acao {
 
     }
 
-    public List<Pessoa> getPessoas() {
+    private List<Pessoa> getPessoas() {
         List<Pessoa> pessoas = null;
         try {
 
@@ -149,7 +149,7 @@ public class Acao {
         return pessoas;
     }
 
-    public List<Pessoa> getPessoasMaiores() {
+    private List<Pessoa> getPessoasMaiores() {
         List<Pessoa> pessoas = null;
         try {
 
@@ -191,7 +191,7 @@ public class Acao {
 
     }
 
-    public List<Pessoa> getPessoasMenores() {
+    private List<Pessoa> getPessoasMenores() {
         List<Pessoa> pessoas = null;
         try {
 
@@ -233,7 +233,7 @@ public class Acao {
 
     }
 
-    public List<Pessoa> getSaldoPositivos() {
+    private List<Pessoa> getSaldoPositivos() {
         List<Pessoa> pessoas = null;
         try {
 
@@ -275,20 +275,11 @@ public class Acao {
 
     } //a concertar
 
-    public List<Pessoa> getSaldoNegativos() {
+    /*public List<Pessoa> getSaldoNegativos() {
         List<Pessoa> pessoas = null;
         try {
-
-            String query = "SELECT pessoa_id FROM conta WHERE saldo < '0'";
-            pessoas = new ArrayList<Pessoa>();
-            PreparedStatement stm = null;
-            ResultSet rset = null;
-
-            stm = connection.prepareStatement(query);
-
-            rset = stm.executeQuery();
-
-            rset.next();
+                List <Pessoa> olhar = getSaldoNegativos();
+                for (Integer t : olhar)
                 Pessoa people = new Pessoa();
                 people.setId(rset.getInt("pessoa_id"));
 
@@ -297,18 +288,11 @@ public class Acao {
                 stm.setInt(1, people.getId());
                 rset = stm.executeQuery();
 
-            while (rset.next()) {
-                Pessoa pessoa = new Pessoa();
-
                 pessoa.setId(rset.getInt("id_pessoa"));
                 pessoa.setNome(rset.getString("nome"));
                 pessoa.setCpf(rset.getString("cpf"));
                 pessoa.setDataNascimento(LocalDate.parse((String.valueOf(rset.getDate("data_nascimento")))));
 
-                pessoas.add(pessoa);
-                rset.next();
-
-            }
 
 
 
@@ -318,6 +302,93 @@ public class Acao {
 
         return pessoas;
 
-    } //a concertar
+    }*/ //a concertar
+
+    private List<Pessoa> getIdSaldoNegativo(){
+        List<Pessoa> pessoas = null;
+        try {
+
+            String query = "SELECT pessoa_id FROM conta WHERE saldo < '0'";
+            pessoas = new ArrayList<Pessoa>();
+            PreparedStatement stm = null;
+            ResultSet rset = null;
+
+            stm = connection.prepareStatement(query);
+            rset = stm.executeQuery();
+
+            while (rset.next()){
+                Pessoa a = new Pessoa();
+                a.setId(rset.getInt("pessoa_id"));
+
+                pessoas.add(a);
+            }
+
+
+
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return  pessoas;
+        }
+
+    public Integer buscarPeloId(Integer idPessoa) {
+        Integer id = null;
+        try {
+            String query = "SELECT id_pessoa, nome, cpf, data_nascimento FROM pessoa WHERE id_pessoa = ?";
+
+            PreparedStatement stm = null;
+            stm = connection.prepareStatement(query);
+            stm.setInt(1, idPessoa);
+            ResultSet rset = null;
+
+            rset = stm.executeQuery();
+            while (rset.next()){
+                id = rset.getInt("id_pessoa");
+
+                if (id != null) {
+                    return id;
+                } else {
+                    Integer validacao;
+                    return validacao = null;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro SQL " + e);
+        }
+
+        return id;
+    }
+
+    public String buscarPeloCpf(String cpfPessoa) {
+        String cpf = null;
+        try {
+            String query = "SELECT id_pessoa, nome, cpf, data_nascimento FROM pessoa WHERE cpf = ?";
+
+            PreparedStatement stm = null;
+            stm = connection.prepareStatement(query);
+            stm.setString(1, cpfPessoa);
+            ResultSet rset = null;
+
+            rset = stm.executeQuery();
+            while (rset.next()){
+                cpf = rset.getString("cpf");
+
+                if (cpf != null) {
+                    return cpf;
+                } else {
+                    String validacao;
+                    return validacao = null;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro SQL " + e);
+        }
+
+        return cpf;
+    }
 }
 
