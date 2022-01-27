@@ -1,5 +1,6 @@
 package JavaBank;
 
+import javax.swing.*;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -91,7 +92,7 @@ public class Acao {
             stm.setString(1, pessoa.getCpf());
             stm.setDate(2, Date.valueOf(pessoa.getDataNascimento()));
             stm.setString(3, pessoa.getNome());
-            stm.setInt(4, pessoa.getLastId());
+            stm.setInt(4, pessoa.getId());
 
             stm.execute();
 
@@ -390,5 +391,58 @@ public class Acao {
 
         return cpf;
     }
+
+    public void inserirPessoa(Pessoa pessoa, Conta conta){
+       try {
+           if (buscarPeloCpf(pessoa.getCpf()) != null){
+               System.out.println("CPF já cadastrado");
+           } else {
+                cadastrarPessoa(pessoa, conta);
+               System.out.println("Cadastrado com sucesso!");
+           }
+       }catch (Exception e){
+           System.out.println("Erro: " + e);
+       }
+    }
+
+    public void atualizarCadastro(Integer idPessoa, Pessoa pessoa){
+        String query = null;
+        PreparedStatement stm = null;
+        ResultSet rset = null;
+        try {
+            if (buscarPeloId(idPessoa) != null){
+                query = "SELECT id_pessoa FROM pessoa WHERE id_pessoa = ?";
+                stm = connection.prepareStatement(query);
+                stm.setInt(1, idPessoa);
+                rset = stm.executeQuery();
+
+                while (rset.next()) {
+                    pessoa.setId(rset.getInt("id_pessoa"));
+                }
+
+                updateBank(pessoa);
+                System.out.println("Dados atualizados com sucesso!");
+            }else {
+                System.out.println("Id não encontrado");
+            }
+        }catch (Exception e){
+            System.out.println("Erro: " + e);
+        }
+
+    }
+
+    public void deletarConta(Integer id){
+        try {
+            if (buscarPeloId(id) != null){
+                removerConta(id);
+                System.out.println("Conta removida");
+            }else {
+                System.out.println("Conta não encontrada");
+            }
+        }catch (Exception e){
+            System.out.println("Erro: " + e);
+        }
+    }
+
 }
 
