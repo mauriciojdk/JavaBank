@@ -28,15 +28,27 @@ public class Acao {
 
             statement.execute();
 
-
-            query = "INSERT INTO conta (numero_conta, pessoa_id) VALUES (?, ?)";
+            query = "SELECT id_pessoa FROM pessoa WHERE cpf = ?";
             statement = connection.prepareStatement(query);
+            statement.setString(1, pessoa.getCpf());
 
-            Integer last = pessoa.getLastId();
-            statement.setInt(1, conta.getNumConta());
-            statement.setInt(2, last);
+            ResultSet rset = null;
+            rset = statement.executeQuery();
+            Integer id = null;
+           while (rset.next()){
+               id = rset.getInt("id_pessoa");
 
-            statement.execute();
+               query = "INSERT INTO conta (numero_conta, pessoa_id) VALUES (?, ?)";
+               statement = connection.prepareStatement(query);
+
+
+               statement.setInt(1, conta.getNumConta());
+               statement.setInt(2, id);
+
+               statement.execute();
+           }
+
+
 
             if (connection != null) {
                 connection.close();
@@ -55,18 +67,18 @@ public class Acao {
         try {
 
             String query = "DELETE FROM conta WHERE id_conta = ?";
-            PreparedStatement stm = null;
+            PreparedStatement statement = null;
 
-            stm = connection.prepareStatement(query);
-            stm.setInt(1, id);
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
 
-            stm.execute();
+            statement.execute();
 
             query = "DELETE FROM pessoa WHERE id_pessoa = ?";
-            stm = connection.prepareStatement(query);
-            stm.setInt(1, id);
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
 
-            stm.execute();
+            statement.execute();
 
             if (connection != null) {
                 connection.close();
@@ -86,15 +98,15 @@ public class Acao {
         try {
 
             String query = "UPDATE pessoa SET cpf = ?, data_nascimento = ?, nome = ? WHERE id_pessoa = ?";
-            PreparedStatement stm = null;
+            PreparedStatement statement = null;
 
-            stm = connection.prepareStatement(query);
-            stm.setString(1, pessoa.getCpf());
-            stm.setDate(2, Date.valueOf(pessoa.getDataNascimento()));
-            stm.setString(3, pessoa.getNome());
-            stm.setInt(4, pessoa.getId());
+            statement = connection.prepareStatement(query);
+            statement.setString(1, pessoa.getCpf());
+            statement.setDate(2, Date.valueOf(pessoa.getDataNascimento()));
+            statement.setString(3, pessoa.getNome());
+            statement.setInt(4, pessoa.getId());
 
-            stm.execute();
+            statement.execute();
 
             if (connection != null) {
                 connection.close();
@@ -156,12 +168,12 @@ public class Acao {
 
             String query = "SELECT id_pessoa, nome, cpf, data_nascimento FROM pessoa WHERE data_nascimento < '2003-01-01'";
             pessoas = new ArrayList<Pessoa>();
-            PreparedStatement stm = null;
+            PreparedStatement statement = null;
             ResultSet rset = null;
 
-            stm = connection.prepareStatement(query);
+            statement = connection.prepareStatement(query);
 
-            rset = stm.executeQuery();
+            rset = statement.executeQuery();
 
             while (rset.next()) {
                 Pessoa pessoa = new Pessoa();
@@ -198,12 +210,12 @@ public class Acao {
 
             String query = "SELECT id_pessoa, nome, cpf, data_nascimento FROM pessoa WHERE data_nascimento > '2003-01-01'";
             pessoas = new ArrayList<Pessoa>();
-            PreparedStatement stm = null;
+            PreparedStatement statement = null;
             ResultSet rset = null;
 
-            stm = connection.prepareStatement(query);
+            statement = connection.prepareStatement(query);
 
-            rset = stm.executeQuery();
+            rset = statement.executeQuery();
 
             while (rset.next()) {
                 Pessoa pessoa = new Pessoa();
@@ -240,21 +252,21 @@ public class Acao {
 
             String query = "SELECT pessoa_id FROM conta WHERE saldo > '0'";
             pessoas = new ArrayList<Pessoa>();
-            PreparedStatement stm = null;
+            PreparedStatement statement = null;
             ResultSet rset = null;
 
-            stm = connection.prepareStatement(query);
+            statement = connection.prepareStatement(query);
 
-            rset = stm.executeQuery();
+            rset = statement.executeQuery();
 
             rset.next();
             Pessoa people = new Pessoa();
             people.setId(rset.getInt("pessoa_id"));
 
             query = "SELECT id_pessoa, nome, cpf, data_nascimento FROM pessoa WHERE id_pessoa = ?";
-            stm = connection.prepareStatement(query);
-            stm.setInt(1, people.getId());
-            rset = stm.executeQuery();
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, people.getId());
+            rset = statement.executeQuery();
 
             while (rset.next()) {
                 Pessoa pessoa = new Pessoa();
@@ -369,11 +381,11 @@ public class Acao {
             String query = "SELECT id_pessoa, nome, cpf, data_nascimento FROM pessoa WHERE cpf = ?";
 
             PreparedStatement stm = null;
-            stm = connection.prepareStatement(query);
-            stm.setString(1, cpfPessoa);
+            statement = connection.prepareStatement(query);
+            statement.setString(1, cpfPessoa);
             ResultSet rset = null;
 
-            rset = stm.executeQuery();
+            rset = statement.executeQuery();
             while (rset.next()){
                 cpf = rset.getString("cpf");
 
@@ -407,14 +419,14 @@ public class Acao {
 
     public void atualizarCadastro(Integer idPessoa, Pessoa pessoa){
         String query = null;
-        PreparedStatement stm = null;
+        PreparedStatement statement = null;
         ResultSet rset = null;
         try {
             if (buscarPeloId(idPessoa) != null){
                 query = "SELECT id_pessoa FROM pessoa WHERE id_pessoa = ?";
-                stm = connection.prepareStatement(query);
-                stm.setInt(1, idPessoa);
-                rset = stm.executeQuery();
+                statement = connection.prepareStatement(query);
+                statement.setInt(1, idPessoa);
+                rset = statement.executeQuery();
 
                 while (rset.next()) {
                     pessoa.setId(rset.getInt("id_pessoa"));
