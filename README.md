@@ -1,6 +1,9 @@
 <h1 align="center">Repositorio do Projeto JAVABANK</h1>
 
-Projeto de banco digital com direito a todas aplicações e funções de um banco digital atualmente
+
+<h3 align="center"> 
+    Projeto de banco digital com direito a todas aplicações e funções de um banco digital atualmente
+</h3>
 
 
 <h4 align="center"> 
