@@ -16,7 +16,7 @@ Projeto de banco digital com direito a todas aplicações e funções de um banc
 
 ## ✔️ Técnicas e tecnologias utilizadas
 
-- ``Java 8``
+- ``Java 11``
 - ``InteliJ IDEA``
 - ``Paradigma de orientação a objetos``
 - ``Hibernate`` (Em breve :construction:)
