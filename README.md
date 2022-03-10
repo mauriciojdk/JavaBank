@@ -19,6 +19,8 @@ Projeto de banco digital com direito a todas aplicações e funções de um banc
 - ``Java 8``
 - ``InteliJ IDEA``
 - ``Paradigma de orientação a objetos``
+- ``Hibernate`` (Em breve :construction:)
+
 
 
 ## 📁 Acesso ao projeto
